@@ -30,7 +30,7 @@ setup(
         ],
     },
     classifiers=[
-        'Development Status :: 1 - Planning',
+        'Development Status :: 3 - Alpha',
         'Environment :: Plugins',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
