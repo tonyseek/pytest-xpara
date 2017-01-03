@@ -4,7 +4,17 @@ import yaml
 import py.path
 
 
+def pytest_addoption(parser):
+    group = parser.getgroup('xpara', 'extended parametrizing plugin')
+    group.addoption('--xpara', action='store_true', default=False,
+                    help='Enable the extended parametrizing support. '
+                    'default: False')
+
+
 def pytest_generate_tests(metafunc):
+    if not metafunc.config.option.xpara:
+        return
+
     xpara_data = getattr(metafunc.module, '__xpara_data__', None)
     if xpara_data is None:
         current_dir = py.path.local(metafunc.module.__file__).dirpath()
