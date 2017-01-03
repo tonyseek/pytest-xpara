@@ -6,7 +6,7 @@ with open('README.rst') as readme:
 
 setup(
     name='pytest-xpara',
-    version='0.0.0',
+    version='0.1.0',
     description='An extended parametrizing plugin of pytest.',
     url='https://github.com/tonyseek/pytest-xpara',
     long_description=long_description,
@@ -30,7 +30,7 @@ setup(
         ],
     },
     classifiers=[
-        'Development Status :: 1 - Planning',
+        'Development Status :: 3 - Alpha',
         'Environment :: Plugins',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
