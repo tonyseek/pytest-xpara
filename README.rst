@@ -1,3 +1,5 @@
+|Build Status| |Coverage Status| |PyPI Version|
+
 pytest-xpara
 ============
 
@@ -68,4 +70,14 @@ Contributing
 If you want to report bugs or request features, please feel free to open issues
 or create pull requests on GitHub_.
 
+
 .. _GitHub: https://github.com/tonyseek/openvpn-status/issues
+.. |Build Status| image:: https://img.shields.io/travis/tonyseek/pytest-xpara.svg?style=flat
+   :target: https://travis-ci.org/tonyseek/pytest-xpara
+   :alt: Build Status
+.. |Coverage Status| image:: https://img.shields.io/coveralls/tonyseek/pytest-xpara.svg?style=flat
+   :target: https://coveralls.io/r/tonyseek/pytest-xpara
+   :alt: Coverage Status
+.. |PyPI Version| image:: https://img.shields.io/pypi/v/pytest-xpara.svg?style=flat
+   :target: https://pypi.python.org/pypi/pytest-xpara
+   :alt: PyPI Version
