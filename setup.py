@@ -18,8 +18,11 @@ setup(
     platforms=['any'],
     install_requires=[
         'pytest',
-        'PyYAML',
     ],
+    extras_require={
+        'yaml': ['PyYAML'],
+        'toml': ['toml'],
+    },
     entry_points={
         'pytest11': [
             'xpara = pytest_xpara.plugin',
