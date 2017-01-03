@@ -1,6 +1,7 @@
 from setuptools import setup, find_packages
 
 with open('README.rst') as readme:
+    next(readme)
     long_description = ''.join(readme).strip()
 
 setup(
@@ -18,8 +19,11 @@ setup(
     platforms=['any'],
     install_requires=[
         'pytest',
-        'PyYAML',
     ],
+    extras_require={
+        'yaml': ['PyYAML'],
+        'toml': ['toml'],
+    },
     entry_points={
         'pytest11': [
             'xpara = pytest_xpara.plugin',
