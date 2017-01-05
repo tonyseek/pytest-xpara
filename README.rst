@@ -71,7 +71,7 @@ If you want to report bugs or request features, please feel free to open issues
 or create pull requests on GitHub_.
 
 
-.. _GitHub: https://github.com/tonyseek/openvpn-status/issues
+.. _GitHub: https://github.com/tonyseek/pytest-xpara/issues
 .. |Build Status| image:: https://img.shields.io/travis/tonyseek/pytest-xpara.svg?style=flat
    :target: https://travis-ci.org/tonyseek/pytest-xpara
    :alt: Build Status
