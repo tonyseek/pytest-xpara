@@ -32,7 +32,7 @@ def pytest_generate_tests(metafunc):
         item_args = item['args'].split(',')
         item_data = [
             [data.get(arg) for arg in item_args] for data in item['data']]
-        metafunc.parametrize(item['args'], item_data, ids=item.get('dataids'))
+        metafunc.parametrize(item_args, item_data, ids=item.get('dataids'))
 
 
 def _load_data(metafunc, loaders):
