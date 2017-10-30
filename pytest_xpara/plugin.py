@@ -29,7 +29,8 @@ def pytest_generate_tests(metafunc):
     ])
     item = xpara_data.get(xpara_data_name) if xpara_data else None
     if item:
-        item_args = item['args'].split(',')
+        item_args = [
+            arg.strip() for arg in item['args'].split(',') if arg.strip()]
         item_data = [
             [data.get(arg) for arg in item_args] for data in item['data']]
         metafunc.parametrize(item_args, item_data, ids=item.get('dataids'))
