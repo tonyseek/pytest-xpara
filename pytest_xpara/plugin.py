@@ -7,7 +7,7 @@ def pytest_addoption(parser):
     group = parser.getgroup('xpara', 'extended parametrizing plugin')
     group.addoption('--xpara', action='store_true', default=False,
                     help='Enable the extended parametrizing support. '
-                    'default: False')
+                         'default: False')
 
 
 def pytest_generate_tests(metafunc):
@@ -15,7 +15,16 @@ def pytest_generate_tests(metafunc):
         return
 
     try:
-        mark = metafunc.function.xparametrize
+        if hasattr(metafunc.function, "xparametrize"):
+            mark = metafunc.function.xparametrize
+        elif hasattr(metafunc.function, "pytestmark"):
+            temp_marks = [x for x in metafunc.function.pytestmark if x.name == "xparametrize"]
+            if len(temp_marks) > 0:
+                mark = temp_marks[0]
+            else:
+                return
+        else:
+            return
     except AttributeError:
         return
     else:
