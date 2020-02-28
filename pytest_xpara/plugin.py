@@ -18,7 +18,8 @@ def pytest_generate_tests(metafunc):
         if hasattr(metafunc.function, "xparametrize"):
             mark = metafunc.function.xparametrize
         elif hasattr(metafunc.function, "pytestmark"):
-            temp_marks = [x for x in metafunc.function.pytestmark if x.name == "xparametrize"]
+            temp_marks = [x for x in metafunc.function.pytestmark
+                          if x.name == "xparametrize"]
             if len(temp_marks) > 0:
                 mark = temp_marks[0]
             else:
