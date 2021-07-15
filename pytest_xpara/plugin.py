@@ -3,6 +3,12 @@ from __future__ import absolute_import
 import py.path
 
 
+def pytest_configure(config):
+    config.addinivalue_line(
+        "markers", "xparametrize: mark test to run only on named environment"
+    )
+
+
 def pytest_addoption(parser):
     group = parser.getgroup('xpara', 'extended parametrizing plugin')
     group.addoption('--xpara', action='store_true', default=False,
@@ -79,7 +85,7 @@ def _load_data_as_yaml(current_dir, file_name):
     for ext_name in ('yaml', 'yml'):
         data_file = current_dir.join('%s.%s' % (file_name, ext_name))
         if data_file.exists():
-            return yaml.load(data_file.read())
+            return yaml.safe_load(data_file.read())
 
 
 def _load_data_as_toml(current_dir, file_name):
