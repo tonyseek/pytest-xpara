@@ -2,9 +2,7 @@ from __future__ import absolute_import
 
 import pytest
 
-
 pytest_plugins = 'pytester'
-
 
 # TODO hmm.. bootstrap in future
 parametrize_data = pytest.mark.parametrize('data_ext,data_content', [
@@ -112,15 +110,17 @@ def test_run(testdir, data_ext, data_content):
     ''')
     result = testdir.runpytest_subprocess('--verbose', '--xpara')
     result.assert_outcomes(passed=6, skipped=0, failed=2)
-    result.stdout.fnmatch_lines_random(r'''
-        test_foobar.py::test_foo*13-15* PASSED
-        test_foobar.py::test_foo*15-16* FAILED
-        test_foobar.py::test_bar*13-14* PASSED
-        test_foobar.py::test_bar*15-16* PASSED
-        test_foobar.py::test_one_parameter*15* PASSED
-        test_foobar.py::test_one_parameter*16* FAILED
-        test_foobar.py::test_baz PASSED
-    ''')
+    result.stdout.re_match_lines_random(
+        [
+            r"^.*?test_foobar.py::test_foo\[13\-15\].*?PASSED.*?$",
+            r"^.*?test_foobar.py::test_foo\[15\-16\].*?FAILED.*?$",
+            r"^.*?test_foobar.py::test_bar\[13\-14\].*?PASSED.*?$",
+            r"^.*?test_foobar.py::test_bar\[15\-16\].*?PASSED.*?$",
+            r"^.*?test_foobar.py::test_one_parameter\[15\].*?PASSED.*?$",
+            r"^.*?test_foobar.py::test_one_parameter\[16\].*?FAILED.*?$",
+            r"^.*?test_foobar.py::test_baz.*?PASSED.*?$"
+        ]
+    )
 
 
 @parametrize_data
@@ -146,7 +146,4 @@ def test_run_disabled(testdir):
             assert foo + 2 == bar
     ''')
     result = testdir.runpytest_subprocess('--verbose')
-    # result.assert_outcomes(passed=0, skipped=0, failed=1)
-    result.stdout.fnmatch_lines_random(r'''
-        E * fixture 'foo' not found
-    ''')
+    result.stdout.re_match_lines_random(r"^.*?fixture 'foo' not found.*?$")

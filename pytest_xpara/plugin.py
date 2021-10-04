@@ -3,11 +3,17 @@ from __future__ import absolute_import
 import py.path
 
 
+def pytest_configure(config):
+    config.addinivalue_line(
+        "markers", "xparametrize: mark test to run only on named environment"
+    )
+
+
 def pytest_addoption(parser):
     group = parser.getgroup('xpara', 'extended parametrizing plugin')
     group.addoption('--xpara', action='store_true', default=False,
                     help='Enable the extended parametrizing support. '
-                    'default: False')
+                         'default: False')
 
 
 def pytest_generate_tests(metafunc):
@@ -15,7 +21,15 @@ def pytest_generate_tests(metafunc):
         return
 
     try:
-        mark = metafunc.function.xparametrize
+        mark = getattr(metafunc.function, "xparametrize", None)
+        if not mark:
+            temp_mark = getattr(metafunc.function, "pytestmark", None)
+            if temp_mark is not None:
+                mark = next(iter(x for x in temp_mark if x.name == "xparametrize"), None)
+            if not mark:
+                return
+        else:
+            return
     except AttributeError:
         return
     else:
@@ -69,7 +83,7 @@ def _load_data_as_yaml(current_dir, file_name):
     for ext_name in ('yaml', 'yml'):
         data_file = current_dir.join('%s.%s' % (file_name, ext_name))
         if data_file.exists():
-            return yaml.load(data_file.read())
+            return yaml.safe_load(data_file.read())
 
 
 def _load_data_as_toml(current_dir, file_name):
