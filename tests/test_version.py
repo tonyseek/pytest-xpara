@@ -4,4 +4,4 @@ from pytest_xpara import __version__ as version
 
 
 def test_version():
-    assert version == '0.2.0'
+    assert version == '0.2.1'
