@@ -124,7 +124,7 @@ def test_run(testdir, data_ext, data_content):
 
 
 @parametrize_data
-def test_run_without_default_name(testdir, data_ext, data_content):
+def test_run_with_custom_name(testdir, data_ext, data_content):
     testdir.makefile(data_ext, test_foobar=data_content)
     testdir.makefile('.py', test_foobar='''
         import pytest
@@ -147,3 +147,32 @@ def test_run_disabled(testdir):
     ''')
     result = testdir.runpytest_subprocess('--verbose')
     result.stdout.re_match_lines_random(r"^.*?fixture 'foo' not found.*?$")
+
+
+@pytest.mark.parametrize('ext_name,pkg_fullname,warning_pattern', [
+    ('.yaml', 'yaml', r'.*YAML parser.+pytest-xpara\[yaml\].*'),
+    ('.toml', 'toml', r'.*TOML parser.+pytest-xpara\[toml\].*'),
+])
+def test_run_without_parser(testdir, ext_name, pkg_fullname, warning_pattern):
+    testdir.makefile(ext_name, test_foobar='')
+    testdir.makefile('.py', test_foobar='''
+        import pytest
+
+        @pytest.mark.xparametrize
+        def test_boom(foo, bar):
+            assert foo + 3 == bar
+    ''')
+    testdir.makefile('.py', conftest='''
+        import sys
+        import pytest
+
+        class MockMetaPathFinder:
+            def find_spec(self, fullname, path, target=None):
+                if fullname == '{0}':
+                     raise ImportError('mock')
+
+        def pytest_configure(config):
+            sys.meta_path.insert(0, MockMetaPathFinder())
+    '''.format(pkg_fullname))
+    result = testdir.runpytest_subprocess('--xpara')
+    result.stdout.re_match_lines_random(warning_pattern)
