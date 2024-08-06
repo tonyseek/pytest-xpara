@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+import warnings
 
 import py.path
 
@@ -63,6 +63,12 @@ def _load_data(metafunc, loaders):
     return data
 
 
+IMPORT_TIPS = (
+    'The fixture data file ("{0.basename}") exists but cannot be loaded because'
+    ' of a lack of {1} parser, which could be installed by "pip install '
+    '\'pytest-xpara[{2}]\'".')
+
+
 def _load_data_as_json(current_dir, file_name):
     try:
         import simplejson as json
@@ -70,29 +76,37 @@ def _load_data_as_json(current_dir, file_name):
         import json
 
     data_file = current_dir.join('%s.json' % file_name)
-    if data_file.exists():
-        return json.loads(data_file.read())
+    if not data_file.exists():
+        return
+    return json.loads(data_file.read())
 
 
 def _load_data_as_yaml(current_dir, file_name):
     try:
         import yaml
     except ImportError:
-        return
+        yaml = None
 
     for ext_name in ('yaml', 'yml'):
         data_file = current_dir.join('%s.%s' % (file_name, ext_name))
-        if data_file.exists():
-            return yaml.safe_load(data_file.read())
+        if not data_file.exists():
+            continue
+        if yaml is None:
+            warnings.warn(IMPORT_TIPS.format(data_file, 'YAML', 'yaml'))
+            return
+        return yaml.safe_load(data_file.read())
 
 
 def _load_data_as_toml(current_dir, file_name):
     try:
         import toml
     except ImportError:
-        return
+        toml = None
 
     data_file = current_dir.join('%s.toml' % file_name)
     if not data_file.exists():
+        return
+    if toml is None:
+        warnings.warn(IMPORT_TIPS.format(data_file, 'TOML', 'toml'))
         return
     return toml.loads(data_file.read())
