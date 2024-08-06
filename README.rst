@@ -72,12 +72,12 @@ or create pull requests on GitHub_.
 
 
 .. _GitHub: https://github.com/tonyseek/pytest-xpara/issues
-.. |Build Status| image:: https://img.shields.io/travis/tonyseek/pytest-xpara.svg?style=flat
-   :target: https://travis-ci.org/tonyseek/pytest-xpara
+.. |Build Status| image:: https://img.shields.io/github/actions/workflow/status/tonyseek/pytest-xpara/check.yml?branch=master&style=flat
+   :target: https://github.com/tonyseek/pytest-xpara/actions/workflows/check.yml
    :alt: Build Status
-.. |Coverage Status| image:: https://img.shields.io/coveralls/tonyseek/pytest-xpara.svg?style=flat
-   :target: https://coveralls.io/r/tonyseek/pytest-xpara
+.. |Coverage Status| image:: https://img.shields.io/coverallsCoverage/github/tonyseek/pytest-xpara?style=flat&branch=master
+   :target: https://coveralls.io/github/tonyseek/pytest-xpara
    :alt: Coverage Status
-.. |PyPI Version| image:: https://img.shields.io/pypi/v/pytest-xpara.svg?style=flat
-   :target: https://pypi.python.org/pypi/pytest-xpara
+.. |PyPI Version| image:: https://img.shields.io/pypi/v/pytest-xpara?style=flat
+   :target: https://pypi.org/project/pytest-xpara/
    :alt: PyPI Version
