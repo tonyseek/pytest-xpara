@@ -10,7 +10,7 @@ setup(
     description='An extended parametrizing plugin of pytest.',
     url='https://github.com/tonyseek/pytest-xpara',
     long_description=long_description,
-    keywords=['pytest', 'parametrize', 'yaml'],
+    keywords=['pytest', 'parametrize', 'yaml', 'toml'],
     author='Jiangge Zhang',
     author_email='tonyseek@gmail.com',
     license='MIT',
